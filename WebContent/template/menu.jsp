@@ -43,6 +43,13 @@
 					Bicicleta
 				</a>
 					</li>
+					<li>
+						<!-- Realizando uma requizição via GET com STRUTS -->
+				<a href="${rootWeb}/turmaAction.do?method=abrirTela">
+					<i class="fa fa-book"></i>
+					Turma
+				</a>
+					</li>
 				</ul>
 				<!-- /.nav-second-level -->
 			</li>

@@ -10,6 +10,7 @@
 		<!-- type: Nome da Classe juntamente com seu package -->
 		<form-bean name="alunoForm" type="br.com.cursojava.studentsystem.sistema.frontend.aluno.AlunoForm" />
 		<form-bean name="bicicletaForm" type="br.com.cursojava.studentsystem.sistema.frontend.bicicleta.BicicletaForm" />
+		<form-bean name="turmaForm" type="br.com.cursojava.studentsystem.sistema.frontend.turma.TurmaForm"></form-bean>
 	</form-beans>
 
 	<!-- AQUI MAPEAMOS AS NOSSAS CLASSES ACTIONs DE FORMA A UNIR FORM/TELAS/ACTION -->
@@ -36,6 +37,15 @@
 		    	scope="session">
 			<!-- AQUI DEFINIMOS AS TELAS QUE A ACTION EM QUESTÃO GERENCIARÁ -->
 			<forward name="bicicletaView" path="/paginas/bicicleta/bicicleta-cadastro.jsp" />
+		</action>
+		
+		<action path="/turmaAction" 
+		    	type="br.com.cursojava.studentsystem.sistema.frontend.turma.TurmaAction" 
+		    	name="turmaForm" 
+		    	parameter="method" 
+		    	scope="session">
+			<!-- AQUI DEFINIMOS AS TELAS QUE A ACTION EM QUESTÃO GERENCIARÁ -->
+			<forward name="turmaView" path="/paginas/turma/turma-cadastro.jsp" />
 		</action>
 		
 	
