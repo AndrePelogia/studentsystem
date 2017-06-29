@@ -20,3 +20,6 @@
 
 <!-- MASCARAS -->
 <script src="${rootWeb}/assets/jquery_mask_plugin-master/dist/jquery.mask.min.js"></script>
+
+<!-- AUTOCOMPLETE JAVASCRIPT -->
+<script src="${rootWeb}/assets/jquery-autocomplete/dist/jquery.autocomplete.min.js"></script>

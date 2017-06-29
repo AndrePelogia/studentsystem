@@ -9,6 +9,7 @@ import br.com.cursojava.studentsystem.connection.HibernateConnection;
 import br.com.cursojava.studentsystem.exception.ApplicationException;
 import br.com.cursojava.studentsystem.sistema.backend.aluno.model.AlunoPO;
 import br.com.cursojava.studentsystem.sistema.backend.endereco.model.EnderecoPO;
+import br.com.cursojava.studentsystem.sistema.backend.turma.model.TurmaPO;
 import br.com.cursojava.studentsystem.utilidades.Utilidades;
 
 public class TestaConexao{
@@ -24,52 +25,51 @@ public class TestaConexao{
 			 * -Confirmar a transação, caso de certo!;
 			 * -Desfazer a transação, caso de errado!;*/
 
-			hibernate.iniciarTransacao();
-
-			List encontrados = hibernate.filtrarTodos( AlunoPO.class );
+			List encontrados = new HibernateConnection().filtrarTodos( AlunoPO.class );
 			System.out.println( encontrados );
 
 			AlunoPO aluno = new AlunoPO();
-			aluno.setNome( "André Duarte" );
-			aluno.setSexo( "Masculino" );
-			aluno.setCpf( "387.739.318-70" );
-			aluno.setDataNascimento( Utilidades.parseDate( "18/11/1989" ) );
+			aluno.setNome( "Mariana Ximenes" );
+			aluno.setSexo( "Feminino" );
+			aluno.setCpf( "427.255.830-71" );
+			aluno.setDataNascimento( Utilidades.parseDate( "18/11/1988" ) );
 
 			EnderecoPO enderecoPO = new EnderecoPO();
-			enderecoPO.setLogradouro( "Rua Mauricio Biondo Neto" );
-			enderecoPO.setNumero( "674" );
+			enderecoPO.setLogradouro( "Rua Das Esmeraldas" );
+			enderecoPO.setNumero( "12" );
 			enderecoPO.setBairro( "COHAB" );
-			enderecoPO.setCidade( "Ourinhos" );
-			enderecoPO.setCep( "19905-280" );
+			enderecoPO.setCidade( "São Paulo" );
+			enderecoPO.setCep( "22000-280" );
 			enderecoPO.setUf( "SP" );
 
 			aluno.setEndereco( enderecoPO );
 
-			aluno.setRa( "12345678" );
+			aluno.setRa( "78912345" );
 			aluno.setPeso( new BigDecimal( "65.0" ) );
 			aluno.setAltura( new BigDecimal( "1.70" ) );
-			aluno.setTurma( "Turma XXXI Noturna de Seg a Sex" );
 
+			TurmaPO encontradoID = (TurmaPO) new HibernateConnection().filtrarPorId( TurmaPO.class, 1L );
+			aluno.setTurma( encontradoID );
+
+			hibernate.iniciarTransacao();
 			aluno = (AlunoPO) hibernate.inserir( aluno );
+			hibernate.commitTransacao();
 
-			encontrados = hibernate.filtrarTodos( AlunoPO.class );
+			encontrados = new HibernateConnection().filtrarTodos( AlunoPO.class );
 			System.out.println( encontrados );
 
-			aluno.setTurma( "Sem turma" );
-			hibernate.alterar( aluno );
+			//hibernate.alterar( aluno );
 
-			encontrados = hibernate.filtrarTodos( AlunoPO.class );
+			/*encontrados = hibernate.filtrarTodos( AlunoPO.class );
 			System.out.println( encontrados );
-
+			
 			AlunoPO encontradoPorId = (AlunoPO) hibernate.filtrarPorId( AlunoPO.class, aluno.getId() );
 			System.out.println( encontradoPorId );
-
-			hibernate.deletar( aluno );
-
+			
+			//hibernate.deletar( aluno );
+			
 			encontrados = hibernate.filtrarTodos( AlunoPO.class );
-			System.out.println( encontrados );
-
-			hibernate.commitTransacao();
+			System.out.println( encontrados );*/
 
 		} catch ( ApplicationException e ) {
 			e.printStackTrace();

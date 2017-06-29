@@ -95,11 +95,15 @@
 									<div class="form-group col-xs-12">
 										<span>*Campos em vermelho são obrigatórios!</span>
 									</div>
+									<logic:notEmpty property="id" name="alunoForm">
 									<div class="form-group col-xs-4 col-sm-4 col-md-2 col-lg-2">
 										<label for="id">Código</label>
 										<html:text styleId="id" styleClass="form-control text-center bloqueado" property="id" name="alunoForm"></html:text>
 									</div>
+									</logic:notEmpty>
+									
 									<div class="clearfix"></div>
+									
 									<div class="form-group col-xs-12 col-sm-6 col-md-8 col-lg-8">
 										<label for="nome">Nome</label>
 										<html:text styleId="nome" styleClass="form-control text-center obrigatorio" property="nome" name="alunoForm"></html:text>
@@ -128,7 +132,7 @@
 										<label for="altura">Altura</label>
 										<html:text styleId="altura" styleClass="form-control text-center decimal" property="altura" name="alunoForm"></html:text>
 									</div>
-									
+
 									<!-- O CAMPO CPF POSSUI UMA LÓGICA QUE: SE O ID ESTIVER CHEIO ELE MOSTRA O CAMPO BLOQUADO, SENÃO, SE O ID ESTIVER VAZIO
 									MOSTRA DESBLOQUADO -->
 
@@ -154,9 +158,16 @@
 										<html:text styleId="ra" styleClass="form-control text-center obrigatorio" property="ra" name="alunoForm"></html:text>
 									</div>
 
-									<div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
+									<%-- <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4 ">
 										<label for="turma">Turma</label>
 										<html:text styleId="turma" styleClass="form-control text-center obrigatorio" property="turma" name="alunoForm"></html:text>
+									</div> --%>
+
+									<div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-4">
+										<label for="turma">Turma</label>
+										<html:text styleId="turma" styleClass="form-control obrigatorio" property="nomeTurma" name="alunoForm" />
+										<i style="margin-top: -28px; float: right; margin-right: 8px; font-size: 25px;" class="fa fa-keyboard-o"></i>
+										<html:hidden styleId="turmaSelecionada" property="idTurma" name="alunoForm" />
 									</div>
 
 									<!--  BLOCO DO ENDEREÇO-->
@@ -244,7 +255,7 @@
 														<td class="text-center">${alunoCorrente.id}</td>
 														<td>${alunoCorrente.nome}</td>
 														<td>${alunoCorrente.sexo}</td>
-														<td>${alunoCorrente.turma}</td>
+														<td>${alunoCorrente.turma.nome}</td>
 
 														<td class="text-center">
 															<a href="${rootWeb}/alunoAction.do?method=selecionar&id=${alunoCorrente.id}">
@@ -416,6 +427,19 @@
 				$("#form_aluno").submit();
 			});
 
+			$('#turma').autocomplete({
+			    minChars : 2,
+			    paramName : 'nomeTurma',
+			    serviceUrl : '${rootWeb}/alunoAction.do?method=selecionarTurmaAutoComplete',
+			    onSelect : function(suggestion) {
+			     $('#turmaSelecionada').val(suggestion.data);
+			    },
+			    onSearchComplete : function(query, suggestions) {
+			     if (suggestions == null || suggestions == '') {
+			      $('#turmaSelecionada').val(null);
+			     }
+			    }
+			   });
 		});
 	</script>
 </body>

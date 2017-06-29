@@ -33,9 +33,10 @@ public class AlunoForm extends ActionForm{
 	private String altura;
 	private String ra;
 	private String dataNascimento;
-	private String turma;
+	private String idTurma;
 	private String peso;
 	private String sexo;
+	private String nomeTurma;
 
 	//CAMPOS DO ENDEREÇO
 
@@ -165,12 +166,12 @@ public class AlunoForm extends ActionForm{
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getTurma() {
-		return turma;
+	public String getIdTurma() {
+		return idTurma;
 	}
 
-	public void setTurma( String turma ) {
-		this.turma = turma;
+	public void setIdTurma( String idTurma ) {
+		this.idTurma = idTurma;
 	}
 
 	public String getPeso() {
@@ -189,6 +190,14 @@ public class AlunoForm extends ActionForm{
 		this.sexo = sexo;
 	}
 
+	public String getNomeTurma() {
+		return nomeTurma;
+	}
+
+	public void setNomeTurma( String nomeTurma ) {
+		this.nomeTurma = nomeTurma;
+	}
+
 	public void limparCampos() {
 		setId( null );
 		setNome( null );
@@ -197,8 +206,9 @@ public class AlunoForm extends ActionForm{
 		setCpf( null );
 		setPeso( null );
 		setSexo( null );
-		setTurma( null );
+		setIdTurma( null );
 		setRa( null );
+		setNomeTurma( null );
 
 		setIdEndereco( null );
 		setLogradouro( null );

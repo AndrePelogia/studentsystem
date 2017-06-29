@@ -108,6 +108,15 @@ public class BicicletaDAO{
 				criteria.add( Restrictions.eq( "preco", po.getPreco() ) );
 			}
 
+			/*DADOS DO ALUNO, UTILIZO O ALIAS PARA NAVEGAR ATÉ OS CAMPOS DO ALUNO, UTILIZO NO HORA DE PESQUISAR.
+			EX.: QUANDO PESQUISO PELO ALUNO, EXIBE NA TABELA AS BIKES DELES.*/
+			if ( po.getAluno() != null ) {
+				criteria.createAlias( "aluno", "aluno" );
+				if ( po.getAluno().getId() != null ) {
+					criteria.add( Restrictions.idEq( po.getAluno().getId() ) );
+				}
+			}
+
 			criteria.addOrder( Order.asc( "marca" ) );
 			List encontrados = criteria.list();
 			hibernate.commitTransacao();

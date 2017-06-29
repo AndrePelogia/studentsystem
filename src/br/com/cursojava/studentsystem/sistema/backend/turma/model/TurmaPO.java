@@ -11,6 +11,7 @@ import javax.persistence.UniqueConstraint;
 
 import br.com.cursojava.studentsystem.abstracts.AbstractPO;
 import br.com.cursojava.studentsystem.interfaces.Crud;
+import br.com.cursojava.studentsystem.utilidades.Utilidades;
 
 @Entity
 @Table( name = "turmas", schema = Crud.SCHEMA, uniqueConstraints = @UniqueConstraint( columnNames = { "nome", "dataInicio", "dataTermino" } ) )
@@ -34,7 +35,7 @@ public class TurmaPO extends AbstractPO< TurmaPO >{
 	}
 
 	public void setNome( String nome ) {
-		this.nome = nome;
+		this.nome = Utilidades.normalizeString( nome );
 	}
 
 	public Date getDataInicio() {

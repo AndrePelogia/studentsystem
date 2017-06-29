@@ -30,48 +30,46 @@ public class TestaDAOBicicleta{
 			 * -Confirmar a transação, caso de certo!;
 			 * -Desfazer a transação, caso de errado!;*/
 
-			//			-INICIAR TRANSAÇÃO;
-			hibernate.iniciarTransacao();
-
 			//			-FAZER O QUE TEM QUE FAZER;
 			List< BicicletaPO > encontrados = bicicletaDAO.filtrarTodos();
 			System.out.println( encontrados );
 
 			BicicletaPO bicicleta = new BicicletaPO();
-			bicicleta.setCor( "Branca" );
+			bicicleta.setCor( "Verde" );
 			bicicleta.setDataFabricacao( Utilidades.parseDate( "11/10/1997" ) );
-			bicicleta.setMarca( "Monark" );
+			bicicleta.setMarca( "Galo" );
 			bicicleta.setMarcha( true );
 			bicicleta.setMaterial( "Aço" );
-			bicicleta.setModalidade( "Street" );
+			bicicleta.setModalidade( "rsrs" );
 			bicicleta.setPreco( new BigDecimal( "500.00" ) );
 
-			AlunoPO alunoId = alunoDAO.filtrarPorId( 1L );
+			AlunoPO alunoId = alunoDAO.filtrarPorId( 2L );
 			bicicleta.setAluno( alunoId );
 
+			//			-INICIAR TRANSAÇÃO;
+			hibernate.iniciarTransacao();
 			bicicletaDAO.inserir( bicicleta, hibernate );
+			//-CONFIRMAR A TRANSAÇÃO, CASO DE CERTO!;
+			hibernate.commitTransacao();
 
-			encontrados = bicicletaDAO.filtrarTodos();
+			/*encontrados = bicicletaDAO.filtrarTodos();
 			System.out.println( encontrados );
-
+			
 			BicicletaPO encontradoPorId = bicicletaDAO.filtrarPorId( bicicleta.getId() );
-
+			
 			encontradoPorId.setCor( "Vermelha" );
 			bicicletaDAO.alterar( encontradoPorId, hibernate );
-
+			
 			encontrados = bicicletaDAO.filtrarTodos();
 			System.out.println( encontrados );
-
+			
 			encontradoPorId = bicicletaDAO.filtrarPorId( bicicleta.getId() );
 			System.out.println( encontradoPorId );
-
+			
 			//bicicletaDAO.excluir( encontradoPorId, hibernate );
-
+			
 			encontrados = bicicletaDAO.filtrarTodos();
-			System.out.println( encontrados );
-
-			//			-CONFIRMAR A TRANSAÇÃO, CASO DE CERTO!;
-			hibernate.commitTransacao();
+			System.out.println( encontrados );*/
 
 		} catch ( ApplicationException e ) {
 			e.printStackTrace();

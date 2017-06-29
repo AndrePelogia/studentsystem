@@ -1,6 +1,5 @@
 package br.com.cursojava.studentsystem.sistema.backend.aluno.dao.teste;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.junit.Test;
@@ -9,14 +8,14 @@ import br.com.cursojava.studentsystem.connection.HibernateConnection;
 import br.com.cursojava.studentsystem.exception.ApplicationException;
 import br.com.cursojava.studentsystem.sistema.backend.aluno.dao.AlunoDAO;
 import br.com.cursojava.studentsystem.sistema.backend.aluno.model.AlunoPO;
-import br.com.cursojava.studentsystem.sistema.backend.endereco.model.EnderecoPO;
-import br.com.cursojava.studentsystem.utilidades.Utilidades;
+import br.com.cursojava.studentsystem.sistema.backend.turma.dao.TurmaDAO;
 
 public class TestaDAO{
 	@Test
 	public void executar() {
 
 		AlunoDAO alunoDAO = new AlunoDAO();
+		TurmaDAO turmaDAO = new TurmaDAO();
 
 		HibernateConnection hibernate = new HibernateConnection();
 
@@ -28,57 +27,65 @@ public class TestaDAO{
 			 * -Confirmar a transação, caso de certo!;
 			 * -Desfazer a transação, caso de errado!;*/
 
-			//			-INICIAR TRANSAÇÃO;
-			hibernate.iniciarTransacao();
-
 			//			-FAZER O QUE TEM QUE FAZER;
 			List< AlunoPO > encontrados = alunoDAO.filtrarTodos();
 			System.out.println( encontrados );
 
-			AlunoPO aluno = new AlunoPO();
-			aluno.setNome( "André Duarte" );
+			/** ESTÁ COMENTADO PORQUE ESTAVA TESTANDO O ATUALIZAR */
+			//DADOS DO ALUNO
+			/*AlunoPO aluno = new AlunoPO();
+			aluno.setNome( "Gustavo Borges" );
 			aluno.setSexo( "Masculino" );
-			aluno.setCpf( "387.739.318-70" );
-			aluno.setDataNascimento( Utilidades.parseDate( "18/11/1989" ) );
-
+			aluno.setCpf( "269.319.259-54" );
+			aluno.setDataNascimento( Utilidades.parseDate( "15/01/1995" ) );
+			aluno.setRa( "123789" );
+			aluno.setPeso( new BigDecimal( "70.0" ) );
+			aluno.setAltura( new BigDecimal( "1.77" ) );
+			
+			//DADOS DO ENDERÇO DO ALUNO
 			EnderecoPO endereco = new EnderecoPO();
-			endereco.setLogradouro( "Rua Mauricio Biondo Neto" );
-			endereco.setNumero( "674" );
+			endereco.setLogradouro( "Rua Nove" );
+			endereco.setNumero( "777" );
 			endereco.setBairro( "COHAB" );
 			endereco.setCep( "19905-280" );
 			endereco.setCidade( "Ourinhos" );
 			endereco.setUf( "SP" );
-
+			
 			aluno.setEndereco( endereco );
+			
+			OBS: QUANDO FOR DESCOMENTADO ESSA LINHA BUSCARÁ NO BANCO A TURMA ID 1!!!
+			TurmaPO encontradoID = turmaDAO.filtrarPorId( 1L );
+			
+			OBS: QUANDO FOR DESCOMENTADO ESSA LINHA IRÁ INSERIR NO ALUNO A TURMA!!!
+			aluno.setTurma( encontradoID );*/
 
-			aluno.setRa( "12345678" );
-			aluno.setPeso( new BigDecimal( "65.0" ) );
-			aluno.setAltura( new BigDecimal( "1.70" ) );
-			aluno.setTurma( "Turma XXXI Noturna de Seg a Sex" );
+			/** ESTA LINHA BUSCA O ALUNO DE ID 3, PARA QUE POSSA SER FEITA A ALTERAÇÃO. */
+			AlunoPO encontradoPorId = alunoDAO.filtrarPorId( 3L );
 
-			alunoDAO.inserir( aluno, hibernate );
+			//	-INICIAR TRANSAÇÃO
+			hibernate.iniciarTransacao();
+			//alunoDAO.inserir( aluno, hibernate );
 
-			encontrados = alunoDAO.filtrarTodos();
-			System.out.println( encontrados );
-
-			AlunoPO encontradoPorId = alunoDAO.filtrarPorId( aluno.getId() );
-
-			encontradoPorId.setTurma( "Sem turma" );
+			encontradoPorId.setNome( "Mariana Linda Ximenes" );
 			alunoDAO.alterar( encontradoPorId, hibernate );
 
-			encontrados = alunoDAO.filtrarTodos();
-			System.out.println( encontrados );
-
-			encontradoPorId = alunoDAO.filtrarPorId( aluno.getId() );
+			// -CONFIRMAR A TRANSAÇÃO, CASO DE CERTO!
+			hibernate.commitTransacao();
 			System.out.println( encontradoPorId );
 
-			//alunoDAO.excluir( encontradoPorId );
-
+			/*encontrados = alunoDAO.filtrarTodos();
+			System.out.println( encontrados );
+						
 			encontrados = alunoDAO.filtrarTodos();
 			System.out.println( encontrados );
-
-			//			-CONFIRMAR A TRANSAÇÃO, CASO DE CERTO!;
-			hibernate.commitTransacao();
+			
+			encontradoPorId = alunoDAO.filtrarPorId( aluno.getId() );
+			System.out.println( encontradoPorId );
+			
+			//alunoDAO.excluir( encontradoPorId );
+			
+			encontrados = alunoDAO.filtrarTodos();
+			System.out.println( encontrados );*/
 
 		} catch ( ApplicationException e ) {
 			e.printStackTrace();

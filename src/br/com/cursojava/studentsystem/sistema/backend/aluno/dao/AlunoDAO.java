@@ -149,8 +149,22 @@ public class AlunoDAO{
 				criteria.add( Restrictions.eq( "sexo", po.getSexo() ) );
 			}
 
+			//DADOS TURMA
 			if ( po.getTurma() != null ) {
-				criteria.add( Restrictions.like( "turma", po.getTurma(), MatchMode.START ) );
+				criteria.createAlias( "turma", "turma" );
+				if ( po.getTurma().getId() != null ) {
+					criteria.add( Restrictions.idEq( po.getTurma().getId() ) );
+				}
+				if ( po.getTurma().getNome() != null ) {
+					criteria.add( Restrictions.like( "turma.nome", po.getTurma().getNome(), MatchMode.START ) );
+				}
+				if ( po.getTurma().getDataInicio() != null ) {
+					criteria.add( Restrictions.eq( "dataInicio", po.getTurma().getDataInicio() ) );
+				}
+				if ( po.getTurma().getDataTermino() != null ) {
+					criteria.add( Restrictions.eq( "dataTermino", po.getTurma().getDataTermino() ) );
+				}
+
 			}
 
 			criteria.addOrder( Order.asc( "nome" ) );

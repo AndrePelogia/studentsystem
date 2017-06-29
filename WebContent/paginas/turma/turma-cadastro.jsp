@@ -4,6 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html lang="en">
 
@@ -93,11 +94,12 @@
 									<div class="form-group col-xs-12">
 										<span>*Campos em vermelho são obrigatórios!</span>
 									</div>
+									<logic:notEmpty property="id" name="turmaForm">
 									<div class="form-group col-xs-4 col-sm-4 col-md-2 col-lg-2">
 										<label for="id">Código</label>
 										<html:text styleId="id" styleClass="form-control text-center bloqueado" property="id" name="turmaForm"></html:text>
 									</div>
-
+	  								</logic:notEmpty>
 									<!-- UTILIZADO PARA QUEBRAR LINHA -->
 									<div class="clearfix"></div>
 
@@ -109,11 +111,12 @@
 									<div class="form-group col-xs-6  col-sm-6 col-md-4 col-lg-4 ">
 										<label for="dataInicio">Data de Início</label>
 										<html:text styleId="dataInicio" styleClass="form-control text-center obrigatorio data" property="dataInicio" name="turmaForm"></html:text>
+
 									</div>
 									<div class="clearfix"></div>
 									<div class="form-group col-xs-6  col-sm-6 col-md-4 col-lg-4 ">
-										<label for="dataTerminio">Data de Término</label>
-										<html:text styleId="dataTerminio" styleClass="form-control text-center obrigatorio data" property="dataTerminio" name="turmaForm"></html:text>
+										<label for="dataTermino">Data de Término</label>
+										<html:text styleId="dataTermino" styleClass="form-control text-center obrigatorio data" property="dataTermino" name="turmaForm"></html:text>
 									</div>
 
 									<!-- <div class="clearfix"></div> -->
@@ -142,9 +145,9 @@
 													<tr>
 														<td class="text-center">${turmaCorrente.id}</td>
 														<td>${turmaCorrente.nome}</td>
-														<td>${turmaCorrente.dataInicio}</td>
-														<td>${turmaCorrente.dataTermino}</td>
-
+														<td><fmt:formatDate value="${turmaCorrente.dataInicio}" pattern="dd/MM/yyyy" /></td>
+														<td><fmt:formatDate value="${turmaCorrente.dataTermino}" pattern="dd/MM/yyyy" /></td>
+													
 														<td class="text-center">
 															<a href="${rootWeb}/turmaAction.do?method=selecionar&id=${turmaCorrente.id}">
 																<i class="glyphicon glyphicon-edit btn btn-xs btn-success"></i>

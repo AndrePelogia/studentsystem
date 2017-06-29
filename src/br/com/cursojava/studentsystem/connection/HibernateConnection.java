@@ -97,7 +97,7 @@ public final class HibernateConnection{
 		try {
 			return (AbstractPO) getSessaoCorrente().merge( obj );
 		} catch ( Throwable t ) {
-			throw new ApplicationException( "Erro inesperado ao tentar inserir" + t );
+			throw new ApplicationException( "Erro inesperado ao tentar inserir " + t );
 		}
 	}
 

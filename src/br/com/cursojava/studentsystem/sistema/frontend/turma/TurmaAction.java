@@ -133,7 +133,7 @@ public class TurmaAction extends DispatchAction{
 		}
 
 		/** O Mapping vai até o struts-config.xml procurar um forward com o nome passado como parametro */
-		return mapping.findForward( "alunoView" );
+		return mapping.findForward( "turmaView" );
 	}
 
 	public ActionForward selecionar( ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response ) {
@@ -158,7 +158,7 @@ public class TurmaAction extends DispatchAction{
 		}
 
 		/** O Mapping vai até o struts-config.xml procurar um forward com o nome passado como parametro */
-		return mapping.findForward( "alunoView" );
+		return mapping.findForward( "turmaView" );
 	}
 
 	private TurmaPO montarPO( TurmaForm meuForm ) throws ParseException {

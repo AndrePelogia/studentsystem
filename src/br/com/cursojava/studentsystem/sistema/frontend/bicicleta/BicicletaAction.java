@@ -67,7 +67,6 @@ public class BicicletaAction extends DispatchAction{
 		AlunoPO aluno = new AlunoPO();
 		if ( meuForm.getIdAluno() != null && !meuForm.getIdAluno().isEmpty() ) {
 			aluno.setId( Long.valueOf( meuForm.getIdAluno() ) );
-			;
 		} else {
 			aluno.setId( null );
 		}
@@ -213,6 +212,7 @@ public class BicicletaAction extends DispatchAction{
 
 			BicicletaFACADE facade = new BicicletaFACADE();
 
+			//AQUI PEGA O GETID DO FORM (DADO DA TELA STRING) E TRANSFORMA COM VALUEOF EM UM LONG QUE IRÁ PRA O BACKEND
 			BicicletaPO encontrado = facade.filtrarPorId( Long.valueOf( meuForm.getId() ) );
 
 			meuForm.setId( encontrado.getId().toString() );

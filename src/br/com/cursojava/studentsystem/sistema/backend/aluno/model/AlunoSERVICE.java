@@ -22,7 +22,7 @@ public final class AlunoSERVICE implements Crud< AlunoPO >{
 	@Override
 	public void inserir( AlunoPO po ) throws ApplicationException {
 		HibernateConnection hibernate = new HibernateConnection();
-
+		//APENAS O MÉTODOS DE PERSISTÊNCIA TERÁ QUE INSTACIAR O HIBERNATE CONNECTION
 		try {
 
 			if ( po == null ) {
@@ -130,7 +130,6 @@ public final class AlunoSERVICE implements Crud< AlunoPO >{
 			/*RETORNO DO MEU FILTRAR*/
 			return (ArrayList< AlunoPO >) encontrados;
 		} catch ( ApplicationException e ) {
-
 			throw e;
 		} catch ( Exception e ) {
 			throw new ApplicationException( "Erro desconhecido ao filtrar...", e );

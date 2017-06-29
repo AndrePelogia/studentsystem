@@ -50,6 +50,15 @@
 					Turma
 				</a>
 					</li>
+					
+						<li>
+						<!-- Realizando uma requizição via GET com STRUTS -->
+				<a href="${rootWeb}/notaAction.do?method=abrirTela">
+					<i class="fa fa-pencil"></i>
+					Nota
+				</a>
+					</li>
+					
 				</ul>
 				<!-- /.nav-second-level -->
 			</li>

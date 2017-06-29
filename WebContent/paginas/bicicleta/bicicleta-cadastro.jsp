@@ -4,6 +4,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html"%>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html lang="en">
 
@@ -93,11 +94,14 @@
 									<div class="form-group col-xs-12">
 										<span>*Campos em vermelho são obrigatórios!</span>
 									</div>
+									
+									<logic:notEmpty property="id" name="bicicletaForm">
 									<div class="form-group col-xs-4 col-sm-4 col-md-2 col-lg-2">
 										<label for="id">Código</label>
 										<html:text styleId="id" styleClass="form-control text-center bloqueado" property="id" name="bicicletaForm"></html:text>
 									</div>
-
+									</logic:notEmpty>
+		
 									<!-- UTILIZADO PARA QUEBRAR LINHA -->
 									<div class="clearfix"></div>
 
@@ -159,6 +163,7 @@
 														<th>Marca</th>
 														<th>Modalidade</th>
 														<th>Cor</th>
+														<th>Data de Fabricação</th>
 														<th class="text-center">Selecionar</th>
 													</tr>
 												</thead>
@@ -174,6 +179,7 @@
 														<td>${bicicletaCorrente.marca}</td>
 														<td>${bicicletaCorrente.modalidade}</td>
 														<td>${bicicletaCorrente.cor}</td>
+														<td><fmt:formatDate value="${bicicletaCorrente.dataFabricacao}" pattern="dd/MM/yyyy" /></td>
 
 														<td class="text-center">
 															<a href="${rootWeb}/bicicletaAction.do?method=selecionar&id=${bicicletaCorrente.id}">

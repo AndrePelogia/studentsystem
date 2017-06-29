@@ -1,12 +1,14 @@
 package br.com.cursojava.studentsystem.sistema.backend.turma.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import br.com.cursojava.studentsystem.connection.HibernateConnection;
 import br.com.cursojava.studentsystem.exception.ApplicationException;
 import br.com.cursojava.studentsystem.interfaces.Crud;
 import br.com.cursojava.studentsystem.sistema.backend.turma.dao.TurmaDAO;
+import br.com.cursojava.studentsystem.utilidades.Utilidades;
 
 public class TurmaSERVICE implements Crud< TurmaPO >{
 
@@ -32,7 +34,12 @@ public class TurmaSERVICE implements Crud< TurmaPO >{
 
 			if ( po.getDataInicio() != null && po.getDataInicio().after( po.getDataTermino() ) ) {
 				// Entra aqui caso a data de nascimento esteja inválida
-				throw new ApplicationException( "Data de início, não pode ser maior que de termino - " + po.getDataInicio() );
+				throw new ApplicationException( "Data de início, não pode ser maior que de termino - " + Utilidades.parseDate( po.getDataInicio() ) );
+			}
+
+			if ( po.getDataInicio() != null && po.getDataInicio().before( new Date() ) ) {
+				// Entra aqui caso a data de nascimento esteja inválida
+				throw new ApplicationException( "Data de início, não pode ser menor que a data atual - " + Utilidades.parseDate( new Date() ) );
 			}
 			/*1º INICIAR TRANSAÇÃO*/
 			hibernate.iniciarTransacao();

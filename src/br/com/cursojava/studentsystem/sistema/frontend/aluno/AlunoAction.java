@@ -10,11 +10,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import br.com.cursojava.studentsystem.exception.ApplicationException;
 import br.com.cursojava.studentsystem.sistema.backend.aluno.controller.AlunoFACADE;
 import br.com.cursojava.studentsystem.sistema.backend.aluno.model.AlunoPO;
 import br.com.cursojava.studentsystem.sistema.backend.endereco.model.EnderecoPO;
+import br.com.cursojava.studentsystem.sistema.backend.turma.controller.TurmaFACADE;
+import br.com.cursojava.studentsystem.sistema.backend.turma.model.TurmaPO;
 import br.com.cursojava.studentsystem.utilidades.Messages;
 import br.com.cursojava.studentsystem.utilidades.Utilidades;
 
@@ -143,6 +147,20 @@ public class AlunoAction extends DispatchAction{
 		return filtrar( mapping, form, request, response );
 	}
 
+	/**
+	 * 
+	 * Método responsável por filtrar a tabela de alunos que está mostrando na tela JSF
+	 *
+	 * @param mapping
+	 * @param form
+	 * @param request
+	 * @param response
+	 * @return
+	 *
+	 * @author André Duarte <andre.silva141@fatec.sp.gov.br>
+	 * @since 7 de jun de 2017 17:52:02
+	 * @version 1.0
+	 */
 	public ActionForward filtrar( ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response ) {
 		try {
 
@@ -184,7 +202,9 @@ public class AlunoAction extends DispatchAction{
 			meuForm.setRa( encontrado.getRa() );
 			meuForm.setAltura( Utilidades.parseBigDecimal( encontrado.getAltura() ) );
 			meuForm.setPeso( Utilidades.parseBigDecimal( encontrado.getPeso() ) );
-			meuForm.setTurma( encontrado.getTurma() );
+
+			//ID DE TURMA QUE IRÁ PARA TELA DO ALUNO
+			meuForm.setIdTurma( encontrado.getTurma().getId().toString() );
 
 			meuForm.setIdEndereco( encontrado.getEndereco().getId().toString() );
 			meuForm.setLogradouro( encontrado.getEndereco().getLogradouro() );
@@ -257,11 +277,21 @@ public class AlunoAction extends DispatchAction{
 			po.setSexo( null );
 		}
 
-		if ( meuForm.getTurma() != null && !meuForm.getTurma().isEmpty() ) {
-			po.setTurma( meuForm.getTurma() );
+		/** CAMPO DO ID DE TURMA NO ALUNO */
+		TurmaPO turma = new TurmaPO();
+		if ( meuForm.getIdTurma() != null && !meuForm.getIdTurma().isEmpty() ) {
+			turma.setId( Long.valueOf( meuForm.getIdTurma() ) );
 		} else {
-			po.setTurma( null );
+			turma.setId( null );
 		}
+
+		if ( meuForm.getNomeTurma() != null && !meuForm.getNomeTurma().isEmpty() ) {
+			turma.setNome( meuForm.getNome() );
+		} else {
+			turma.setNome( null );
+		}
+
+		po.setTurma( turma );
 		/**
 		 * Gerenciamento do Endereço
 		 */
@@ -312,5 +342,44 @@ public class AlunoAction extends DispatchAction{
 		po.setEndereco( endereco );
 
 		return po;
+	}
+
+	@SuppressWarnings( { "unchecked" } )
+	public ActionForward selecionarTurmaAutoComplete( ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response ) {
+
+		AlunoForm meuForm = (AlunoForm) form;
+		try {
+
+			JSONObject jsonObject = new JSONObject();
+			JSONObject map = null;
+			JSONArray jsonArray = new JSONArray();
+
+			ArrayList< TurmaPO > turmas = new ArrayList< TurmaPO >();
+			TurmaPO turmaPO = new TurmaPO();
+
+			turmaPO.setNome( meuForm.getNomeTurma() );
+			turmas = ( new TurmaFACADE() ).filtrar( turmaPO );
+
+			for ( TurmaPO turma : turmas ) {
+
+				map = new JSONObject();
+				map.put( "value", turma.getNome() );
+				map.put( "data", turma.getId() );
+				jsonArray.add( map );
+
+			}
+
+			jsonObject.put( "suggestions", jsonArray );
+
+			response.setContentType( "application/json" );
+			response.setHeader( "Cache-Control", "nocache" );
+			response.getWriter().print( jsonObject.toString() );
+
+		} catch ( Throwable e ) {
+			this.addErrors( request, Messages.createMessagesErrors( "erro", e.getMessage() ) );
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

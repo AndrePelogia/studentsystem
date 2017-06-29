@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -19,6 +20,7 @@ import org.hibernate.annotations.ForeignKey;
 import br.com.cursojava.studentsystem.abstracts.AbstractPO;
 import br.com.cursojava.studentsystem.interfaces.Crud;
 import br.com.cursojava.studentsystem.sistema.backend.endereco.model.EnderecoPO;
+import br.com.cursojava.studentsystem.sistema.backend.turma.model.TurmaPO;
 import br.com.cursojava.studentsystem.utilidades.Utilidades;
 
 @Entity
@@ -45,9 +47,6 @@ public final class AlunoPO extends AbstractPO< AlunoPO >{
 	@Column( name = "dataNascimento", length = 10, nullable = false )
 	private Date dataNascimento;
 
-	@Column( name = "turma", length = 50, nullable = false )
-	private String turma;
-
 	@Column( name = "peso", precision = 5, scale = 2, nullable = true )
 	private BigDecimal peso;
 
@@ -64,6 +63,12 @@ public final class AlunoPO extends AbstractPO< AlunoPO >{
 	@JoinColumn( name = "idEndereco" )
 	@ForeignKey( name = "fk_aluno_endereco" )
 	private EnderecoPO endereco = new EnderecoPO();
+
+	//RELACIONAMENTO MANY TO ONE ENTRE ALUNO E TURMA
+	@ManyToOne( fetch = FetchType.EAGER, optional = false )
+	@JoinColumn( name = "idTurma" )
+	@ForeignKey( name = "fk_aluno_turma" )
+	private TurmaPO turma = new TurmaPO();
 
 	@Override
 	public int hashCode() {
@@ -111,10 +116,10 @@ public final class AlunoPO extends AbstractPO< AlunoPO >{
 		return true;
 	}
 
-	public AlunoPO( String nome, String cpf, String turma ){
+	public AlunoPO( String nome, String cpf ){
 		setNome( nome );
 		setCpf( cpf );
-		setTurma( turma );
+
 	}
 
 	//exigencia do hibernate
@@ -177,12 +182,12 @@ public final class AlunoPO extends AbstractPO< AlunoPO >{
 		this.dataNascimento = dataNascimento;
 	}
 
-	public String getTurma() {
+	public TurmaPO getTurma() {
 		return turma;
 	}
 
-	public void setTurma( String turma ) {
-		this.turma = Utilidades.normalizeString( turma );
+	public void setTurma( TurmaPO turma ) {
+		this.turma = turma;
 	}
 
 	public BigDecimal getPeso() {
@@ -218,20 +223,18 @@ public final class AlunoPO extends AbstractPO< AlunoPO >{
 		builder.append( cpf );
 		builder.append( ", altura=" );
 		builder.append( altura );
-		builder.append( ", endereco=" );
-		builder.append( endereco );
 		builder.append( ", ra=" );
 		builder.append( ra );
 		builder.append( ", dataNascimento=" );
 		builder.append( dataNascimento );
-		builder.append( ", turma=" );
-		builder.append( turma );
 		builder.append( ", peso=" );
 		builder.append( peso );
 		builder.append( ", sexo=" );
 		builder.append( sexo );
-		builder.append( ", getId()=" );
-		builder.append( getId() );
+		builder.append( ", endereco=" );
+		builder.append( endereco );
+		builder.append( ", turma=" );
+		builder.append( turma );
 		builder.append( "]" );
 		return builder.toString();
 	}

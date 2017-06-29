@@ -5,23 +5,28 @@
 "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
 <hibernate-configuration>
-    <session-factory>
-        <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-        <property name="connection.user">root</property>
-        <property name="connection.password">duarte1989</property>
-        <property name="connection.pool_size">31</property>
-        <property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
-        <property name="show_sql">true</property>
-        <property name="format_sql">true</property>
-        <property name="connection.autocommit">false</property>
-        
-        <property name="hbm2ddl.auto">update</property>
-        <property name="current_session_context_class">thread</property>
-        
-        <!-- MAPEANDO O PO -->
-        <mapping class= "br.com.cursojava.studentsystem.sistema.backend.aluno.model.AlunoPO"/>
-        <mapping class= "br.com.cursojava.studentsystem.sistema.backend.endereco.model.EnderecoPO"/>
-        <mapping class= "br.com.cursojava.studentsystem.sistema.backend.bicicleta.model.BicicletaPO"/>
-        <mapping class= "br.com.cursojava.studentsystem.sistema.backend.turma.model.TurmaPO"/>
-    </session-factory>
+	<session-factory>
+		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+		<property name="connection.user">root</property>
+		<property name="connection.password">duarte1989</property>
+		<property name="connection.pool_size">31</property>
+		<property name="dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<property name="show_sql">true</property>
+		<property name="format_sql">true</property>
+		<property name="connection.autocommit">false</property>
+
+		<property name="hbm2ddl.auto">update</property>
+		<property name="current_session_context_class">thread</property>
+
+		<!-- MAPEANDO O PO -->
+		<mapping class="br.com.cursojava.studentsystem.sistema.backend.aluno.model.AlunoPO" />
+		<mapping class="br.com.cursojava.studentsystem.sistema.backend.endereco.model.EnderecoPO" />
+		<mapping class="br.com.cursojava.studentsystem.sistema.backend.bicicleta.model.BicicletaPO" />
+		<mapping class="br.com.cursojava.studentsystem.sistema.backend.turma.model.TurmaPO" />
+		<mapping class="br.com.cursojava.studentsystem.sistema.backend.nota.model.NotaPO" />
+		<mapping class="br.com.cursojava.studentsystem.sistema.backend.materia.model.MateriaPO" />
+
+
+
+	</session-factory>
 </hibernate-configuration>
